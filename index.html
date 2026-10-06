@@ -1,1203 +1,1437 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VISI0N22 | Developer Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #111118;
-            --bg-card: #16161f;
-            --bg-card-hover: #1c1c28;
-            --accent: #8A2BE2;
-            --accent-light: #a855f7;
-            --accent-glow: rgba(138, 43, 226, 0.3);
-            --text-primary: #f0f0f5;
-            --text-secondary: #a0a0b0;
-            --text-muted: #6b6b7b;
-            --border: #252535;
-            --success: #22c55e;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        ::selection {
-            background: var(--accent-glow);
-            color: var(--text-primary);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 4px;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1.2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: rgba(10, 10, 15, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo i {
-            font-size: 1.2rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-social {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav-social a {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-
-        .nav-social a:hover {
-            color: var(--accent);
-            border-color: var(--accent);
-            background: var(--accent-glow);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 0 5%;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            top: 20%;
-            left: 10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .hero-bg::after {
-            content: '';
-            position: absolute;
-            bottom: 10%;
-            right: 10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.15), transparent 70%);
-            border-radius: 50%;
-            animation: float 10s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-30px) scale(1.05); }
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 1;
-            max-width: 800px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1.2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 50px;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .hero-badge .dot {
-            width: 8px;
-            height: 8px;
-            background: var(--success);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 0.6s ease 0.1s both;
-        }
-
-        .hero h1 .gradient-text {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            animation: fadeInUp 0.6s ease 0.2s both;
-        }
-
-        .typing-text {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--accent-light);
-        }
-
-        .hero-description {
-            font-size: 1rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-            animation: fadeInUp 0.6s ease 0.3s both;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.6s ease 0.4s both;
-        }
-
-        .btn {
-            padding: 0.9rem 2rem;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            color: white;
-            box-shadow: 0 4px 20px var(--accent-glow);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px var(--accent-glow);
-        }
-
-        .btn-secondary {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-indicator i {
-            color: var(--text-muted);
-            font-size: 1.5rem;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Section Styles */
-        section {
-            padding: 6rem 5%;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-tag {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            background: var(--accent-glow);
-            color: var(--accent-light);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .section-subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* About Section */
-        .about {
-            background: var(--bg-secondary);
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 4rem;
-            align-items: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .about-image {
-            position: relative;
-        }
-
-        .about-image img {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 20px;
-            border: 2px solid var(--border);
-        }
-
-        .about-image::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            width: 100%;
-            height: 100%;
-            border: 2px solid var(--accent);
-            border-radius: 20px;
-            z-index: -1;
-            opacity: 0.3;
-        }
-
-        .about-content h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .about-content p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .about-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 1.5rem;
-            background: var(--bg-card);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .stat-item:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--accent);
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 0.3rem;
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .project-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-light));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .project-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .project-header {
-            padding: 1.5rem 1.5rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .project-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--accent-glow);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--accent);
-        }
-
-        .project-links {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .project-links a {
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .project-links a:hover {
-            background: var(--accent);
-            color: white;
-        }
-
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .project-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-description {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .project-features {
-            list-style: none;
-            margin-bottom: 1.5rem;
-        }
-
-        .project-features li {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-features li i {
-            color: var(--accent);
-            font-size: 0.8rem;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .tech-tag {
-            padding: 0.3rem 0.8rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* Skills Section */
-        .skills {
-            background: var(--bg-secondary);
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .skill-category {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .skill-category:hover {
-            border-color: var(--accent);
-        }
-
-        .skill-category-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .skill-category-icon {
-            width: 45px;
-            height: 45px;
-            background: var(--accent-glow);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent);
-            font-size: 1.2rem;
-        }
-
-        .skill-category-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        .skill-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.7rem;
-        }
-
-        .skill-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .skill-item:hover {
-            background: var(--accent-glow);
-            color: var(--accent-light);
-        }
-
-        .skill-item img {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Contact Section */
-        .contact-content {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .contact-description {
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            padding: 1rem 2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .contact-link:hover {
-            border-color: var(--accent);
-            background: var(--accent-glow);
-            transform: translateY(-3px);
-        }
-
-        .contact-link i {
-            font-size: 1.3rem;
-        }
-
-        .contact-link.github i { color: #f0f0f5; }
-
-        /* Footer */
-        footer {
-            padding: 3rem 5%;
-            text-align: center;
-            border-top: 1px solid var(--border);
-            background: var(--bg-secondary);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .footer-text {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .footer-quote {
-            font-style: italic;
-            color: var(--text-secondary);
-            margin-top: 1rem;
-            font-size: 1rem;
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .about-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-links {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .contact-link {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
-        }
-
-        /* Reveal Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s ease;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#080c14">
+  <meta
+    name="description"
+    content="VISI0N22 — conversational interfaces, browser tools, and web experiences."
+  >
+  <title>VISI0N22 — Digital Workshop</title>
+
+  <style>
+    :root {
+      --background: #080c14;
+      --surface: #101724;
+      --surface-raised: #151f30;
+      --text: #edf3ff;
+      --muted: #96a4ba;
+      --border: #263247;
+      --cyan: #6ee7ff;
+      --violet: #b5a0ff;
+      --orange: #ffbc8b;
+      --radius: 24px;
+      --width: 1140px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family:
+        ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid var(--cyan);
+      outline-offset: 5px;
+    }
+
+    ::selection {
+      background: var(--cyan);
+      color: var(--background);
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .container {
+      width: min(var(--width), calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    .mono {
+      font-family:
+        ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .eyebrow {
+      color: var(--cyan);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: -100px;
+      left: 16px;
+      z-index: 100;
+      padding: 12px 18px;
+      border-radius: 8px;
+      background: var(--cyan);
+      color: var(--background);
+    }
+
+    .skip-link:focus {
+      top: 16px;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8, 12, 20, 0.94);
+      backdrop-filter: blur(18px);
+    }
+
+    .navigation {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.04rem;
+      font-weight: 800;
+      letter-spacing: 0.035em;
+    }
+
+    .logo-mark {
+      color: var(--cyan);
+      font-size: 1.3rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: color 160ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links .nav-github {
+      border: 1px solid var(--border);
+      padding: 9px 15px;
+      border-radius: 100px;
+      color: var(--text);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 56px;
+      align-items: center;
+      padding-block: 106px 90px;
+    }
+
+    .hero-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 18px rgba(110, 231, 255, 0.5);
+    }
+
+    h1 {
+      margin: 26px 0;
+      font-size: clamp(3.5rem, 6.6vw, 6rem);
+      line-height: 1.02;
+      letter-spacing: -0.065em;
+      font-weight: 850;
+    }
+
+    .gradient-text {
+      color: var(--cyan);
+      background: linear-gradient(
+        100deg, var(--cyan), #b3c4ff 65%, var(--violet)
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      max-width: 470px;
+      color: var(--muted);
+      font-size: 1.06rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      min-height: 48px;
+      padding: 11px 20px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: transparent;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 650;
+      transition:
+        transform 180ms ease,
+        background 180ms ease,
+        border-color 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      background: var(--surface-raised);
+      border-color: #465772;
+    }
+
+    .button-primary {
+      background: var(--cyan);
+      border-color: var(--cyan);
+      color: #07131a;
+    }
+
+    .button-primary:hover {
+      background: #a0efff;
+      border-color: #a0efff;
+    }
+
+    .hero-note {
+      margin-top: 32px;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .workshop {
+      position: relative;
+      min-height: 390px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(
+          circle at 50% 45%,
+          rgba(110, 231, 255, 0.12),
+          transparent 65%
+        ),
+        var(--surface);
+    }
+
+    .workshop-grid {
+      position: absolute;
+      inset: -40%;
+      background-image:
+        linear-gradient(#6ee7ff16 1px, transparent 1px),
+        linear-gradient(90deg, #6ee7ff16 1px, transparent 1px);
+      background-size: 38px 38px;
+      transform: perspective(500px) rotateX(55deg) rotateZ(-25deg);
+      animation: grid-drift 20s linear infinite;
+    }
+
+    @keyframes grid-drift {
+      from {
+        background-position: 0 0;
+      }
+      to {
+        background-position: 0 76px;
+      }
+    }
+
+    .workshop-top,
+    .workshop-bottom {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .workshop-top {
+      top: 20px;
+    }
+
+    .workshop-bottom {
+      bottom: 20px;
+    }
+
+    .floating-window {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 260px;
+      transform: translate(-50%, -50%) rotate(-7deg);
+      overflow: hidden;
+      border: 1px solid #60748e;
+      border-radius: 16px;
+      background: #0b1424;
+      box-shadow: 0 30px 70px #00000055;
+      animation: window-float 6s ease-in-out infinite;
+    }
+
+    @keyframes window-float {
+      0%, 100% {
+        transform: translate(-50%, -50%) rotate(-7deg);
+      }
+      50% {
+        transform: translate(-50%, -55%) rotate(-4deg);
+      }
+    }
+
+    .window-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .window-bar i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #60748e;
+    }
+
+    .window-bar i:first-child {
+      background: var(--cyan);
+    }
+
+    .window-body {
+      padding: 26px 22px;
+      font-size: 0.8rem;
+      line-height: 2;
+    }
+
+    .code-muted {
+      color: #7d90ac;
+    }
+
+    .code-cyan {
+      color: var(--cyan);
+    }
+
+    .code-violet {
+      color: var(--violet);
+    }
+
+    .toolkit {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 14px 24px;
+      padding: 20px 0;
+      border-block: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .toolkit span::before {
+      content: "+";
+      margin-right: 10px;
+      color: var(--cyan);
+    }
+
+    section {
+      padding-block: 80px;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 32px;
+      margin-bottom: 34px;
+    }
+
+    h2 {
+      margin: 12px 0 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.05em;
+      line-height: 1.15;
+    }
+
+    .section-heading p {
+      max-width: 340px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .project {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      transition:
+        transform 220ms ease,
+        border-color 220ms ease;
+    }
+
+    .project:hover {
+      transform: translateY(-6px);
+      border-color: #56728c;
+    }
+
+    .project-art {
+      position: relative;
+      display: grid;
+      place-items: center;
+      height: 210px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-art::before,
+    .project-art::after {
+      content: "";
+      position: absolute;
+    }
+
+    .art-scholar {
+      background:
+        radial-gradient(circle, #504078 0, transparent 65%),
+        #19142b;
+      color: #ddceff;
+    }
+
+    .art-scholar::before {
+      width: 115px;
+      height: 115px;
+      border: 1px solid #d3baff99;
+      transform: rotate(45deg);
+    }
+
+    .art-scholar::after {
+      width: 145px;
+      height: 145px;
+      border: 1px solid #d3baff44;
+      border-radius: 50%;
+    }
+
+    .art-portfolio {
+      background:
+        radial-gradient(circle, #205168 0, transparent 65%),
+        #0d2330;
+      color: #bcefff;
+    }
+
+    .art-portfolio::before {
+      width: 175px;
+      height: 108px;
+      border: 1px solid #95d9ef;
+      border-radius: 12px;
+      transform: rotate(-9deg);
+      background: #0d233055;
+    }
+
+    .art-portfolio::after {
+      width: 175px;
+      height: 108px;
+      border: 1px solid #95d9ef44;
+      border-radius: 12px;
+      transform: translate(15px, 15px) rotate(4deg);
+    }
+
+    .art-extension {
+      background:
+        radial-gradient(circle, #714a35 0, transparent 65%),
+        #2a1b16;
+      color: #ffe0c6;
+    }
+
+    .art-extension::before {
+      width: 110px;
+      height: 110px;
+      border: 1px solid #ffc393;
+      border-radius: 25px;
+      transform: rotate(12deg);
+    }
+
+    .art-extension::after {
+      width: 135px;
+      height: 135px;
+      border: 1px dashed #ffc39355;
+      border-radius: 35px;
+      transform: rotate(-12deg);
+    }
+
+    .art-symbol {
+      z-index: 1;
+      font-size: 2.8rem;
+      line-height: 1;
+      font-weight: 300;
+    }
+
+    .art-label {
+      position: absolute;
+      bottom: 15px;
+      left: 18px;
+      font-size: 0.6rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      opacity: 0.75;
+    }
+
+    .project-content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 24px;
+    }
+
+    .project-category {
+      margin-bottom: 10px;
+      color: var(--cyan);
+      font-size: 0.63rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .project-category.archived {
+      color: var(--orange);
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: -0.035em;
+      line-height: 1.35;
+    }
+
+    .project-description {
+      flex: 1;
+      margin-block: 14px 20px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 22px;
+    }
+
+    .project-tags span {
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 0.63rem;
+    }
+
+    .project-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-footer a,
+    .details-button {
+      font-size: 0.78rem;
+    }
+
+    .project-footer a:hover {
+      color: var(--cyan);
+    }
+
+    .details-button {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+    }
+
+    .details-button:hover {
+      color: var(--text);
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 70px;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-copy > p:first-child {
+      margin-top: 0;
+      color: var(--text);
+      font-size: 1.3rem;
+      line-height: 1.6;
+    }
+
+    .about-copy p {
+      color: var(--muted);
+    }
+
+    .principles {
+      margin-top: 30px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .principle {
+      display: flex;
+      gap: 18px;
+      padding: 17px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+    }
+
+    .principle-number {
+      color: var(--cyan);
+      font-size: 0.75rem;
+      padding-top: 3px;
+    }
+
+    .principle strong {
+      font-size: 0.87rem;
+    }
+
+    .principle p {
+      margin: 4px 0 0;
+      font-size: 0.8rem;
+    }
+
+    .connect {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 70px;
+      padding: 42px;
+      overflow: hidden;
+      border: 1px solid #365571;
+      border-radius: var(--radius);
+      background:
+        radial-gradient(
+          ellipse at right,
+          rgba(110, 231, 255, 0.12),
+          transparent 70%
+        ),
+        var(--surface);
+    }
+
+    .connect h2 {
+      margin-top: 0;
+    }
+
+    .connect p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .connect .button {
+      white-space: nowrap;
+    }
+
+    .site-footer {
+      padding-block: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    dialog {
+      width: min(560px, calc(100% - 32px));
+      max-height: calc(100dvh - 48px);
+      padding: 30px;
+      overflow: auto;
+      border: 1px solid #49617d;
+      border-radius: 22px;
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 30px 100px #00000088;
+    }
+
+    dialog::backdrop {
+      background: #02060cbf;
+      backdrop-filter: blur(6px);
+    }
+
+    .dialog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 20px;
+    }
+
+    .dialog-header h2 {
+      margin: 0;
+      font-size: 1.65rem;
+    }
+
+    .dialog-close {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-raised);
+      color: var(--text);
+      font-size: 1.2rem;
+    }
+
+    .dialog-status {
+      color: var(--cyan);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .dialog-description,
+    .dialog-note {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .dialog-note {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.8rem;
+    }
+
+    .dialog-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 1000px) {
+      .hero {
+        gap: 32px;
+      }
+
+      .projects {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .project:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .project:last-child .project-art {
+        height: 180px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-block: 65px;
+        gap: 40px;
+      }
+
+      .hero-description {
+        max-width: 550px;
+      }
+
+      .workshop {
+        min-height: 320px;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .section-heading p {
+        max-width: 500px;
+        margin-top: 18px;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .connect {
+        align-items: start;
+        flex-direction: column;
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: calc(100% - 32px);
+      }
+
+      .navigation {
+        min-height: 68px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 68px;
+        left: 0;
+        right: 0;
+        padding: 22px;
+        border-bottom: 1px solid var(--border);
+        background: var(--background);
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      h1 {
+        font-size: clamp(3.2rem, 13vw, 4.4rem);
+      }
+
+      section {
+        padding-block: 55px;
+      }
+
+      .toolkit {
+        justify-content: start;
+      }
+
+      .projects {
+        grid-template-columns: 1fr;
+      }
+
+      .project:last-child {
+        grid-column: auto;
+      }
+
+      .project:last-child .project-art {
+        height: 210px;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      dialog {
+        padding: 24px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <!-- Navigation -->
-    <nav>
-        <a href="#" class="logo">
-            VISI0N22
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="navigation container" aria-label="Main navigation">
+      <a class="logo mono" href="#" aria-label="VISI0N22 home">
+        <span class="logo-mark" aria-hidden="true">⌁</span>
+        VISI0N22
+      </a>
+
+      <button
+        class="menu-toggle"
+        id="menu-toggle"
+        type="button"
+        aria-label="Toggle navigation"
+        aria-expanded="false"
+        aria-controls="nav-links"
+      >
+        ☰
+      </button>
+
+      <div class="nav-links" id="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#connect">Connect</a>
+        <a class="nav-github" href="https://github.com/VISI0N22">
+          GitHub ↗
         </a>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+      </div>
     </nav>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span class="dot"></span>
-                Available for collaboration
-            </div>
-            <h1>
-                Hey, I'm <span class="gradient-text">VISI0N22</span>
-            </h1>
-            <p class="hero-subtitle">
-                <span class="typing-text" id="typing"></span><span class="cursor">|</span>
-            </p>
-            <p class="hero-description">
-                Learning to code one project at a time. Building browser extensions, exploring Rust, 
-                and creating automation tools that make life easier.
-            </p>
-            <div class="hero-buttons">
-                <a href="#projects" class="btn btn-primary">
-                    View Projects
-                </a>
-                <a href="https://github.com/VISI0N22" target="_blank" class="btn btn-secondary">
-                    GitHub Profile
-                </a>
-            </div>
+  <main id="main" class="container">
+    <div class="hero">
+      <div class="hero-copy">
+        <div class="hero-status eyebrow mono">
+          <span class="status-dot" aria-hidden="true"></span>
+          The digital workshop of VISI0N22
         </div>
-        <div class="scroll-indicator">
+
+        <h1>
+          Curiosity,<br>
+          made<br>
+          <span class="gradient-text">interactive.</span>
+        </h1>
+
+        <p class="hero-description">
+          Conversational interfaces, browser tools, and web experiences.
+          A collection of projects built around specific interests
+          and ideas.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#projects">
+            Explore projects <span aria-hidden="true">↘</span>
+          </a>
+          <a class="button" href="https://github.com/VISI0N22">
+            Browse the code <span aria-hidden="true">↗</span>
+          </a>
         </div>
+
+        <p class="hero-note mono">
+          JavaScript / HTML / CSS
+        </p>
+      </div>
+
+      <div class="workshop" aria-hidden="true">
+        <div class="workshop-grid"></div>
+
+        <div class="workshop-top mono">
+          <span>VISI0N22 / Workspace</span>
+          <span>001</span>
+        </div>
+
+        <div class="floating-window">
+          <div class="window-bar">
+            <i></i><i></i><i></i>
+          </div>
+          <div class="window-body mono">
+            <div class="code-muted">// start with curiosity</div>
+            <div>
+              <span class="code-violet">const</span>
+              idea = {
+            </div>
+            <div>&nbsp; creator: <span class="code-cyan">"VISI0N22"</span>,</div>
+            <div>&nbsp; medium: <span class="code-cyan">"the web"</span>,</div>
+            <div>&nbsp; purpose: <span class="code-cyan">"interaction"</span></div>
+            <div>};</div>
+          </div>
+        </div>
+
+        <div class="workshop-bottom mono">
+          <span>Idea → Interface</span>
+          <span>✦</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolkit mono" aria-label="Project technologies">
+      <span>JavaScript</span>
+      <span>HTML & CSS</span>
+      <span>Browser extensions</span>
+      <span>GitHub Pages</span>
+    </div>
+
+    <section id="projects" aria-labelledby="projects-title">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow mono">01 / Selected projects</span>
+          <h2 id="projects-title">Inside the workshop.</h2>
+        </div>
+        <p>
+          A conversational interface, a personal website,
+          and an archived browser-extension experiment.
+        </p>
+      </div>
+
+      <div class="projects">
+        <article class="project">
+          <div class="project-art art-scholar" aria-hidden="true">
+            <span class="art-symbol">✧</span>
+            <span class="art-label mono">Lore / Questions / Discovery</span>
+          </div>
+
+          <div class="project-content">
+            <div class="project-category mono">Conversational interface</div>
+            <h3>Coppermind Scholar</h3>
+            <p class="project-description">
+              Explore characters, worlds, and magic systems
+              across Brandon Sanderson's Cosmere through a
+              conversational interface.
+            </p>
+
+            <div class="project-tags" aria-label="Technologies">
+              <span>JavaScript</span>
+              <span>HTML</span>
+              <span>CSS</span>
+            </div>
+
+            <div class="project-footer">
+              <a href="https://github.com/VISI0N22/coppermind-scholar">
+                Source code ↗
+              </a>
+              <button
+                class="details-button"
+                type="button"
+                data-project="scholar"
+                hidden
+              >
+                Details +
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-art art-portfolio" aria-hidden="true">
+            <span class="art-symbol mono">&lt;/&gt;</span>
+            <span class="art-label mono">Identity / Projects / Interface</span>
+          </div>
+
+          <div class="project-content">
+            <div class="project-category mono">Personal website</div>
+            <h3>Developer Portfolio</h3>
+            <p class="project-description">
+              A home for VISI0N22 on the web.
+              Bringing projects, descriptions, and source code
+              together in one focused space.
+            </p>
+
+            <div class="project-tags" aria-label="Technologies">
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>JavaScript</span>
+            </div>
+
+            <div class="project-footer">
+              <a href="https://github.com/VISI0N22/Portfolio">
+                Source code ↗
+              </a>
+              <button
+                class="details-button"
+                type="button"
+                data-project="portfolio"
+                hidden
+              >
+                Details +
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-art art-extension" aria-hidden="true">
+            <span class="art-symbol">⌘</span>
+            <span class="art-label mono">Browser / Automation / Archive</span>
+          </div>
+
+          <div class="project-content">
+            <div class="project-category archived mono">
+              Browser extension · Archived
+            </div>
+            <h3>Rewards Bot ReFree</h3>
+            <p class="project-description">
+              A browser-extension automation project preserved
+              as an archive. Not actively maintained or presented
+              as a current supported tool.
+            </p>
+
+            <div class="project-tags" aria-label="Technologies">
+              <span>JavaScript</span>
+              <span>HTML</span>
+              <span>CSS</span>
+            </div>
+
+            <div class="project-footer">
+              <a href="https://github.com/VISI0N22/Microsoft-Rewards-Bot-ReFree">
+                View archive ↗
+              </a>
+              <button
+                class="details-button"
+                type="button"
+                data-project="extension"
+                hidden
+              >
+                Details +
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="section-header reveal">
-            <span class="section-tag">About Me</span>
-            <h2 class="section-title">Who I Am</h2>
-            <p class="section-subtitle">
-                A passionate developer exploring the world of code, one project at a time.
-            </p>
-        </div>
-        <div class="about-grid reveal">
-            <div class="about-content">
-                <h3>Learning & Building</h3>
-                <p>
-                    I'm VISI0N22, a developer on a journey to master coding. I love building things 
-                    that solve real problems - from browser extensions that automate tedious tasks to 
-                    games that push creative boundaries.
-                </p>
-               
-                <div class="about-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">9+</div>
-                        <div class="stat-label">Projects</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">JS</div>
-                        <div class="stat-label">Primary</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">Rust</div>
-                        <div class="stat-label">Exploring</div>
-                    </div>
-                </div>
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div>
+        <span class="eyebrow mono">02 / About VISI0N22</span>
+        <h2 id="about-title">
+          Specific interests.<br>
+          Tangible projects.
+        </h2>
+      </div>
+
+      <div class="about-copy">
+        <p>
+          This workshop brings together projects that turn
+          an interest into an interface.
+        </p>
+        <p>
+          Coppermind Scholar explores conversational access to
+          Cosmere lore. The portfolio presents the work itself.
+          An archived extension captures a past exploration
+          of browser automation.
+        </p>
+
+        <div class="principles">
+          <div class="principle">
+            <span class="principle-number mono">01</span>
+            <div>
+              <strong>Conversations around knowledge</strong>
+              <p>
+                Exploring a specific subject through an
+                approachable question-and-answer interface.
+              </p>
             </div>
+          </div>
+
+          <div class="principle">
+            <span class="principle-number mono">02</span>
+            <div>
+              <strong>A home for the work</strong>
+              <p>
+                Presenting projects with clear descriptions
+                and direct links to the code.
+              </p>
+            </div>
+          </div>
+
+          <div class="principle">
+            <span class="principle-number mono">03</span>
+            <div>
+              <strong>Past experiments, clearly labeled</strong>
+              <p>
+                Keeping archived work visible without
+                implying ongoing maintenance.
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- Projects Section -->
-    <section class="projects" id="projects">
-        <div class="section-header reveal">
-            <span class="section-tag">Projects</span>
-            <h2 class="section-title">Featured Projects</h2>
-            <p class="section-subtitle">
-                A collection of my work - from browser extensions to game mods and open-source contributions.
-            </p>
-        </div>
-        <div class="projects-grid">
-            <!-- ReFree Pro -->
-            <div class="project-card reveal">
-                <div class="project-content">
-                    <h3 class="project-title">ReFree Pro</h3>
-                    <p class="project-description">
-                        A cross-browser extension that automates Microsoft Rewards collection with 
-                        human-like behavior. Earn points effortlessly while you browse.
-                    </p>
-                    <ul class="project-features">
-                        <li>Background operation in inactive tabs</li>
-                        <li>Human-like typing & mouse movements</li>
-                        <li>AI-generated search queries</li>
-                        <li>Cross-browser compatibility</li>
-                        <li>Persistent settings storage</li>
-                    </ul>
-                    <div class="project-tech">
-                        <span class="tech-tag">JavaScript</span>
-                        <span class="tech-tag">Chrome Extension</span>
-                        <span class="tech-tag">Web Automation</span>
-                        <span class="tech-tag">MIT License</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Infinite GD Wave -->
-            <div class="project-card reveal">
-                <div class="project-content">
-                    <h3 class="project-title">Infinite GD Wave</h3>
-                    <p class="project-description">
-                        An infinite version of the Geometry Dash wave - an endless challenge mode 
-                        that tests your skills without limits. Push your reflexes to the edge.
-                    </p>
-                    <ul class="project-features">
-                        <li>Endless wave gameplay</li>
-                        <li>Progressive difficulty scaling</li>
-                        <li>High score tracking</li>
-                    </ul>
-                    <div class="project-tech">
-                        <span class="tech-tag">Game Dev</span>
-                        <span class="tech-tag">Geometry Dash</span>
-                        <span class="tech-tag">Modding</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- claw-code -->
-            <div class="project-card reveal">
-                <div class="project-content">
-                    <h3 class="project-title">claw-code</h3>
-                    <p class="project-description">
-                        Contributing to one of the fastest-growing Rust projects on GitHub. 
-                        Built in Rust with oh-my-codex, this project gained 100K+ stars rapidly.
-                    </p>
-                    <ul class="project-features">
-                        <li>High-performance Rust codebase</li>
-                        <li>Open-source contribution</li>
-                        <li>Community-driven development</li>
-                    </ul>
-                    <div class="project-tech">
-                        <span class="tech-tag">Rust</span>
-                        <span class="tech-tag">Open Source</span>
-                        <span class="tech-tag">oh-my-codex</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- coppermind-scholar -->
-            <div class="project-card reveal">
-                <div class="project-content">
-                    <h3 class="project-title">Coppermind Scholar</h3>
-                    <p class="project-description">
-                        A conversational AI interface for querying The Coppermind - the official 
-                        Brandon Sanderson wiki. Ask questions about characters, magic systems, worlds, 
-                        and events across the Cosmere.
-                    </p>
-                    <ul class="project-features">
-                        <li>Natural language Q&A over wiki content</li>
-                        <li>Cosmere-wide character & magic system lookup</li>
-                        <li>Conversational AI interface</li>
-                    </ul>
-                    <div class="project-tech">
-                        <span class="tech-tag">AI</span>
-                        <span class="tech-tag">Cosmere</span>
-                        <span class="tech-tag">Conversational Search</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- chemistry-brawl-latest-hacked -->
-            <div class="project-card reveal">
-                <div class="project-content">
-                    <h3 class="project-title">Chemistry Brawl (Hacked)</h3>
-                    <p class="project-description">
-                        A hacked version of Chemistry Brawl.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Game Mod</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section class="connect" id="connect" aria-labelledby="connect-title">
+      <div>
+        <span class="eyebrow mono">03 / Connect</span>
+        <h2 id="connect-title">Follow the code.</h2>
+        <p>
+          Explore the repositories and find VISI0N22 on GitHub.
+        </p>
+      </div>
+      <a class="button button-primary" href="https://github.com/VISI0N22">
+        Open GitHub <span aria-hidden="true">↗</span>
+      </a>
     </section>
+  </main>
 
-    <!-- Skills Section -->
-    <section class="skills" id="skills">
-        <div class="section-header reveal">
-            <span class="section-tag">Skills</span>
-            <h2 class="section-title">Tech Stack</h2>
-            <p class="section-subtitle">
-                Technologies and tools I use to bring ideas to life.
-            </p>
-        </div>
-        <div class="skills-grid">
-            <div class="skill-category reveal">
-                <div class="skill-category-header">
-                    <h3 class="skill-category-title">Languages</h3>
-                </div>
-                <div class="skill-items">
-                    <div class="skill-item">
-                        JavaScript
-                    </div>
-                    <div class="skill-item">
-                        Rust
-                    </div>
-                    <div class="skill-item">
-                        HTML5
-                    </div>
-                    <div class="skill-item">
-                        CSS3
-                    </div>
-                </div>
-            </div>
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <span>© <span id="year">2026</span> VISI0N22</span>
+      <span class="mono">Curiosity → Code → Interaction</span>
+    </div>
+  </footer>
 
-            <div class="skill-category reveal">
-                <div class="skill-category-header">
-                    <h3 class="skill-category-title">Technologies</h3>
-                </div>
-                <div class="skill-items">
-                    <div class="skill-item">
-                        Chrome Extension API
-                    </div>
-                    <div class="skill-item">
-                        Web Automation
-                    </div>
-                    <div class="skill-item">
-                        Game Modding
-                    </div>
-                    <div class="skill-item">
-                        CLI Tools
-                    </div>
-                </div>
-            </div>
+  <dialog
+    id="project-dialog"
+    aria-labelledby="dialog-title"
+    aria-describedby="dialog-description"
+  >
+    <div class="dialog-header">
+      <h2 id="dialog-title"></h2>
+      <button
+        class="dialog-close"
+        id="dialog-close"
+        type="button"
+        aria-label="Close project details"
+        autofocus
+      >
+        ×
+      </button>
+    </div>
 
-            <div class="skill-category reveal">
-                <div class="skill-category-header">
-                    <h3 class="skill-category-title">Tools</h3>
-                </div>
-                <div class="skill-items">
-                    <div class="skill-item">
-                        Git
-                    </div>
-                    <div class="skill-item">
-                        GitHub
-                    </div>
-                    <div class="skill-item">
-                        VS Code
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <p class="dialog-status mono" id="dialog-status"></p>
+    <p class="dialog-description" id="dialog-description"></p>
+    <p class="dialog-note" id="dialog-note"></p>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="section-header reveal">
-            <span class="section-tag">Get In Touch</span>
-            <h2 class="section-title">Let's Connect</h2>
-            <p class="section-subtitle">
-                Interested in collaborating or just want to chat? Reach out!
-            </p>
-        </div>
-        <div class="contact-content reveal">
-            <p class="contact-description">
-                I'm always open to discussing new projects, creative ideas, or opportunities to be part of 
-                something amazing. Whether it's code, games, or just a friendly chat - my inbox is open.
-            </p>
-            <div class="contact-links">
-                <a href="https://github.com/VISI0N22" target="_blank" class="contact-link github">
-                    VISI0N22
-                </a>
-            </div>
-        </div>
-    </section>
+    <div class="dialog-actions">
+      <a class="button button-primary" id="dialog-source" href="#">
+        Source code ↗
+      </a>
+      <a class="button" id="dialog-site" href="#" hidden>
+        Visit site ↗
+      </a>
+    </div>
+  </dialog>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                VISI0N22
-            </div>
-            <p class="footer-text">
-                © 2026 VISI0N22.
-            </p>
-            <p class="footer-quote">"Search smarter, not harder."</p>
-        </div>
-    </footer>
+  <script>
+    (() => {
+      "use strict";
 
-    <script>
-        // Typing Effect
-        const phrases = [
-            "Learning to code 📚",
-            "Building browser extensions 🧩",
-            "Exploring Rust 🦀",
-            "Creating automation tools 🚀",
-        ];
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        const typingElement = document.getElementById('typing');
+      const menuButton = document.getElementById("menu-toggle");
+      const navigation = document.getElementById("nav-links");
+      const dialog = document.getElementById("project-dialog");
+      const closeButton = document.getElementById("dialog-close");
+      const detailButtons = document.querySelectorAll("[data-project]");
 
-        function type() {
-            const currentPhrase = phrases[phraseIndex];
+      const projects = {
+        scholar: {
+          title: "Coppermind Scholar",
+          status: "Conversational web interface",
+          description:
+            "A conversational interface for querying The Coppermind " +
+            "and exploring characters, magic systems, worlds, and " +
+            "events across Brandon Sanderson's Cosmere.",
+          note:
+            "Built with JavaScript, HTML, and CSS. " +
+            "The site link opens the project's configured GitHub Pages address.",
+          source:
+            "https://github.com/VISI0N22/coppermind-scholar",
+          site:
+            "https://visi0n22.github.io/coppermind-scholar/"
+        },
 
-            if (isDeleting) {
-                typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
-                charIndex++;
-            }
+        portfolio: {
+          title: "Developer Portfolio",
+          status: "Personal website",
+          description:
+            "A personal website for VISI0N22, bringing selected projects " +
+            "and source-code links together in a single place.",
+          note:
+            "This design uses self-contained HTML, CSS, and JavaScript. " +
+            "No framework, API key, or build step is required.",
+          source:
+            "https://github.com/VISI0N22/Portfolio",
+          site: null
+        },
 
-            let typeSpeed = isDeleting ? 50 : 100;
+        extension: {
+          title: "Microsoft Rewards Bot ReFree",
+          status: "Archived browser extension",
+          description:
+            "A browser-extension automation project preserved " +
+            "in an archived repository.",
+          note:
+            "Not actively maintained. Inclusion here documents past work " +
+            "and does not imply current compatibility or support.",
+          source:
+            "https://github.com/VISI0N22/Microsoft-Rewards-Bot-ReFree",
+          site: null
+        }
+      };
 
-            if (!isDeleting && charIndex === currentPhrase.length) {
-                typeSpeed = 2000;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                typeSpeed = 500;
-            }
+      function closeMenu() {
+        navigation.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+      }
 
-            setTimeout(type, typeSpeed);
+      menuButton.addEventListener("click", () => {
+        const isOpen = navigation.classList.toggle("open");
+        menuButton.setAttribute("aria-expanded", String(isOpen));
+      });
+
+      navigation.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMenu);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (
+          event.key === "Escape" &&
+          navigation.classList.contains("open")
+        ) {
+          closeMenu();
+          menuButton.focus();
+        }
+      });
+
+      window.matchMedia("(min-width: 561px)").addEventListener(
+        "change",
+        (event) => {
+          if (event.matches) closeMenu();
+        }
+      );
+
+      let lastTrigger = null;
+
+      function openProject(key, trigger) {
+        const project = projects[key];
+        if (!project) return;
+
+        document.getElementById("dialog-title").textContent =
+          project.title;
+        document.getElementById("dialog-status").textContent =
+          project.status;
+        document.getElementById("dialog-description").textContent =
+          project.description;
+        document.getElementById("dialog-note").textContent =
+          project.note;
+
+        const sourceLink = document.getElementById("dialog-source");
+        const siteLink = document.getElementById("dialog-site");
+
+        sourceLink.href = project.source;
+        sourceLink.textContent =
+          key === "extension" ? "View archive ↗" : "Source code ↗";
+
+        siteLink.hidden = !project.site;
+        if (project.site) {
+          siteLink.href = project.site;
+        } else {
+          siteLink.removeAttribute("href");
         }
 
-        type();
+        lastTrigger = trigger;
+        dialog.showModal();
+        document.body.classList.add("modal-open");
+      }
 
-        // Scroll Reveal Animation
-        const revealElements = document.querySelectorAll('.reveal');
-
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+      if (typeof dialog.showModal === "function") {
+        detailButtons.forEach((button) => {
+          button.hidden = false;
+          button.addEventListener("click", () => {
+            openProject(button.dataset.project, button);
+          });
         });
+      }
 
-        revealElements.forEach(el => revealObserver.observe(el));
+      closeButton.addEventListener("click", () => {
+        dialog.close();
+      });
 
-        // Navbar scroll effect
-        const nav = document.querySelector('nav');
-        let lastScroll = 0;
+      dialog.addEventListener("click", (event) => {
+        const bounds = dialog.getBoundingClientRect();
 
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
+        const outside =
+          event.clientX < bounds.left ||
+          event.clientX > bounds.right ||
+          event.clientY < bounds.top ||
+          event.clientY > bounds.bottom;
 
-            if (currentScroll > 100) {
-                nav.style.padding = '0.8rem 5%';
-                nav.style.background = 'rgba(10, 10, 15, 0.95)';
-            } else {
-                nav.style.padding = '1.2rem 5%';
-                nav.style.background = 'rgba(10, 10, 15, 0.8)';
-            }
+        if (event.target === dialog && outside) {
+          dialog.close();
+        }
+      });
 
-            lastScroll = currentScroll;
-        });
+      dialog.addEventListener("close", () => {
+        document.body.classList.remove("modal-open");
 
-        // Smooth scroll for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
+        if (lastTrigger) {
+          lastTrigger.focus();
+          lastTrigger = null;
+        }
+      });
+
+      document.getElementById("year").textContent =
+        new Date().getFullYear();
+    })();
+  </script>
 </body>
 </html>
